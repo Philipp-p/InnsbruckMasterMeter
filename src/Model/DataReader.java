@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+
+import quadTree.Points;
 import quadTree.QuadTree;
 
 public class DataReader {
-	QuadTree<Integer> min90 = new QuadTree<Integer>(11, 47, 12, 48);
-	QuadTree<Integer> min180 = new QuadTree<Integer>(11, 47, 12, 48);
-	QuadTree<Integer> parkstrassen = new QuadTree<Integer>(11, 47, 12, 48);
+	QuadTree<Points> min90 = new QuadTree<Points>(11, 47, 12, 48);
+	QuadTree<Points> min180 = new QuadTree<Points>(11, 47, 12, 48);
+	QuadTree<Points> parkstrassen = new QuadTree<Points>(11, 47, 12, 48);
 
 	public static void demoRead(BufferedReader buff) throws IOException {
 		for (String content = buff.readLine(); content != null; content = buff
@@ -20,14 +22,21 @@ public class DataReader {
 	}
 
 	public void fillTrees(BufferedReader buff) throws IOException {
-		for (String content = buff.readLine(); content != null; content = buff.readLine()) {
+		Double x;
+		Double y;
+		int i = 0;
+		for (String content = buff.readLine() ; content != null; content = buff.readLine(), i++) {
 			String[] tmp = content.split(";");
-			if (tmp[3].equals("90 min."))
-				min90.put(Double.parseDouble(tmp[6].replace(",",".")), Double.parseDouble(tmp[7].replace(",",".")), 1);
-			else if (tmp[3].equals("180 min."))
-				min180.put(Double.parseDouble(tmp[6].replace(",",".")), Double.parseDouble(tmp[7].replace(",",".")), 2);
-			else if (tmp[3].equals("Parkstraße werktags"))
-				parkstrassen.put(Double.parseDouble(tmp[6].replace(",",".")), Double.parseDouble(tmp[7].replace(",",".")), 3);
+			if (i !=0) {
+				x = Double.parseDouble(tmp[6].replace(",","."));
+				y = Double.parseDouble(tmp[7].replace(",","."));
+				if (tmp[3].equals("90 min."))
+					min90.put(x, y, new Points(x,y));
+				else if (tmp[3].equals("180 min."))
+					min180.put(x, y, new Points(x,y));
+				else if (tmp[3].equals("Parkstraße werktags"))
+					parkstrassen.put(x, y, new Points(x,y));
+			}
 		}
 	}
 
