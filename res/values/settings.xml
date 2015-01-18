@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="SETTING_TILECACHE_THREADING">SETTING_TILECACHE_THREADING</string>
+    <string name="SETTING_TILECACHE_QUEUESIZE">SETTING_TILECACHE_QUEUESIZE</string>
+
+</resources>
