@@ -14,7 +14,7 @@ public class DataReader {
 			48);
 
 	/**
-	 * fills the tree quad trees of the DataReader, one for each category of
+	 * fills the three quad trees of the DataReader, one for each category of
 	 * master meters, with the data from www.innsbruck.gv.at
 	 * 
 	 * @throws IOException
@@ -71,7 +71,7 @@ public class DataReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		buff = loadFileFromWeb();
+
 		DataReader test = new DataReader();
 		try {
 			test.fillTrees();

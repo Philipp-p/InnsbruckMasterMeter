@@ -77,5 +77,6 @@ public class Manager {
 		out[2] = data.parkstrassen.get(location.getX(), location.getY());
 		return out;
 	}
+	
 
 }
