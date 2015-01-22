@@ -12,8 +12,9 @@ import quadTree.QuadTree;
 public class DataReader {
 	protected QuadTree<Point> min90 = new QuadTree<Point>(11, 47, 12, 48);
 	protected QuadTree<Point> min180 = new QuadTree<Point>(11, 47, 12, 48);
-	protected QuadTree<Point> parkstrassen = new QuadTree<Point>(11, 47, 12,
+	protected QuadTree<Point> parkstrassenW = new QuadTree<Point>(11, 47, 12,
 			48);
+	protected QuadTree<Point> parkstrassenT = new QuadTree<Point>(11, 47, 12, 48);
 
 	/**
 	 * fills the three quad trees of the DataReader, one for each category of
@@ -37,7 +38,9 @@ public class DataReader {
 				else if (tmp[3].equals("180 min."))
 					min180.put(x, y, new Point(x, y));
 				else if (tmp[3].equals("Parkstraße werktags"))
-					parkstrassen.put(x, y, new Point(x, y));
+					parkstrassenW.put(x, y, new Point(x, y));
+				else if (tmp[3].equals("Parkstraße täglich"))
+					parkstrassenT.put(x, y, new Point(x, y));
 			}
 		}
 	}

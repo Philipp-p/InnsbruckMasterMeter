@@ -31,23 +31,25 @@ public class Manager {
 	 * @return
 	 */
 	public ArrayList<Point> get180MasterMeters() {
-		ArrayList<Point> out = new ArrayList<Point>();
-		for (Point tmp : data.min180.values()) {
-			out.add(tmp);
-		}
+		ArrayList<Point> out = new ArrayList<Point>(data.min180.values());
 		return out;
 	}
 
 	/**
-	 * returns all "Parkstrassen" master meters
+	 * returns all "Parkstrassen werkstags" master meters
 	 * 
 	 * @return
 	 */
-	public ArrayList<Point> getParkMasterMeters() {
-		ArrayList<Point> out = new ArrayList<Point>();
-		for (Point tmp : data.parkstrassen.values()) {
-			out.add(tmp);
-		}
+	public ArrayList<Point> getParkWMasterMeters() {
+		ArrayList<Point> out = new ArrayList<Point>(data.parkstrassenW.values());
+		return out;
+	}
+	/**
+	 * returns all  "Parkstarssen taeglich" master meters
+	 * @return
+	 */
+	public ArrayList<Point> getParkTMasterMeters() {
+		ArrayList<Point> out = new ArrayList<Point>(data.parkstrassenT.values());
 		return out;
 	}
 
@@ -58,15 +60,10 @@ public class Manager {
 	 */
 	public ArrayList<Point> getAllMasterMeters() {
 		ArrayList<Point> out = new ArrayList<Point>();
-		for (Point tmp : data.min90.values()) {
-			out.add(tmp);
-		}
-		for (Point tmp : data.min180.values()) {
-			out.add(tmp);
-		}
-		for (Point tmp : data.parkstrassen.values()) {
-			out.add(tmp);
-		}
+		out.addAll(get90MasterMeters());
+		out.addAll(get180MasterMeters());
+		out.addAll(getParkWMasterMeters());
+		out.addAll(getParkTMasterMeters());
 		return out;
 	}
 
@@ -78,10 +75,11 @@ public class Manager {
 	 * @return
 	 */
 	public Point[] getNearestMasterMeters(Point location) {
-		Point[] out = new Point[3];
+		Point[] out = new Point[4];
 		out[0] = data.min90.get(location.getX(), location.getY());
 		out[1] = data.min180.get(location.getX(), location.getY());
-		out[2] = data.parkstrassen.get(location.getX(), location.getY());
+		out[2] = data.parkstrassenW.get(location.getX(), location.getY());
+		out[3] = data.parkstrassenT.get(location.getX(), location.getY());
 		return out;
 	}
 
@@ -89,7 +87,7 @@ public class Manager {
 	 * returns the n nearest master meters of a category 
 	 * @param location user location
 	 * @param n number of master meters wanted
-	 * @param category 1 is 90 min., 2 is 180 min. and 3 is "parkstarssen"
+	 * @param category 1 is 90 min., 2 is 180 min.  3 is "Parkstarssen werkstags" and 4 is "Parkstarssen taeglich"
 	 * @return
 	 */
 	public ArrayList<Point> getNearestNMasterMetersOfCategory(Point location,
@@ -116,15 +114,25 @@ public class Manager {
 
 		} else if (category == 3) {
 			for (int i = 0; i < n; n++) {
-				Point tmp = data.parkstrassen.get(location.getX(),
+				Point tmp = data.parkstrassenW.get(location.getX(),
 						location.getY());
 				out.add(tmp);
-				data.parkstrassen.remove(tmp.getX(), tmp.getY(), tmp);
+				data.parkstrassenW.remove(tmp.getX(), tmp.getY(), tmp);
 			}
 			for (Point tmp : out) {
-				data.parkstrassen.put(tmp.getX(), tmp.getY(), tmp);
+				data.parkstrassenW.put(tmp.getX(), tmp.getY(), tmp);
 			}
 
+		} else if  (category == 4) {
+			for (int i = 0; i < n; n++) {
+				Point tmp = data.parkstrassenT.get(location.getX(),
+						location.getY());
+				out.add(tmp);
+				data.parkstrassenT.remove(tmp.getX(), tmp.getY(), tmp);
+			}
+			for (Point tmp : out) {
+				data.parkstrassenT.put(tmp.getX(), tmp.getY(), tmp);
+			}
 		}
 		return out;
 	}
@@ -137,7 +145,7 @@ public class Manager {
 	 */
 	public ArrayList<Point> getNearestNMasterMerters(Point location, int n) {
 		ArrayList<Point> out = new ArrayList<Point>();
-		for (int i = 1; i <= 3; i++) {
+		for (int i = 1; i <= 4; i++) {
 			out.addAll(getNearestNMasterMetersOfCategory(location, n, i));
 		}
 		return out;
