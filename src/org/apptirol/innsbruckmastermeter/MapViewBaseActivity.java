@@ -135,7 +135,6 @@ public abstract class MapViewBaseActivity extends MapViewerTemplate implements S
 	/*
 	 * Settings related methods.
 	 */
-
 	@Override
 	protected void createSharedPreferences() {
 		super.createSharedPreferences();

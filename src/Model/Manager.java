@@ -78,5 +78,17 @@ public class Manager {
 		return out;
 	}
 	
+	/**
+	 * 
+	 * @param location
+	 * @param n
+	 * @param category
+	 * @return
+	 */
+	public ArrayList<Points> getNearestNMasterMetersOfCategory(Points location, int n, int category) {
+		ArrayList<Points> out = new ArrayList<Points>();
+		
+		return out;
+	}
 
 }
