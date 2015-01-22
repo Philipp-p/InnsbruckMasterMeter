@@ -87,6 +87,35 @@ public class Manager {
 	 */
 	public ArrayList<Points> getNearestNMasterMetersOfCategory(Points location, int n, int category) {
 		ArrayList<Points> out = new ArrayList<Points>();
+		if (category == 1) {
+			for (int i = 0; i < n;n++ ) {
+				Points tmp = data.min90.get(location.getX(), location.getY());
+				out.add(tmp);
+				data.min90.remove(tmp.getX(), tmp.getY(), tmp);
+			}
+			for (Points tmp : out) {
+				data.min90.put(tmp.getX(), tmp.getY(), tmp);
+			}
+		} else if (category == 2) {
+			for (int i = 0; i < n;n++ ) {
+				Points tmp = data.min180.get(location.getX(), location.getY());
+				out.add(tmp);
+				data.min180.remove(tmp.getX(), tmp.getY(), tmp);
+			}
+			for (Points tmp : out) {
+				data.min180.put(tmp.getX(), tmp.getY(), tmp);
+			}
+			
+		} else if (category == 3) {
+			for (int i = 0; i < n;n++ ) {
+				Points tmp = data.parkstrassen.get(location.getX(), location.getY());
+				out.add(tmp);
+				data.parkstrassen.remove(tmp.getX(), tmp.getY(), tmp);
+			}
+			for (Points tmp : out) {
+				data.parkstrassen.put(tmp.getX(), tmp.getY(), tmp);
+			}
+			
 		
 		return out;
 	}
