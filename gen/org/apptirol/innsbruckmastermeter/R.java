@@ -1087,10 +1087,12 @@ containing a value of this type.
         public static final int p180min_s=0x7f02005d;
         public static final int p90min=0x7f02005e;
         public static final int p90min_s=0x7f02005f;
-        public static final int park=0x7f020060;
-        public static final int park_s=0x7f020061;
-        public static final int position=0x7f020062;
-        public static final int positionndpi=0x7f020063;
+        public static final int parkt=0x7f020060;
+        public static final int parkt_s=0x7f020061;
+        public static final int parkw=0x7f020062;
+        public static final int parkw_s=0x7f020063;
+        public static final int position=0x7f020064;
+        public static final int positionndpi=0x7f020065;
     }
     public static final class id {
         public static final int action_bar=0x7f0a001c;

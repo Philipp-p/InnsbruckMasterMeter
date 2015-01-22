@@ -87,11 +87,13 @@ public class MasterMeterActivity extends RenderTheme4 {
 		Drawable pos_i = getResources().getDrawable(R.drawable.position);
 		Drawable p180_i = getResources().getDrawable(R.drawable.p180min_s);
 		Drawable p90_i = getResources().getDrawable(R.drawable.p90min_s);
-		Drawable park_i = getResources().getDrawable(R.drawable.park_s);
+		Drawable parkw_i = getResources().getDrawable(R.drawable.parkw_s);
+		Drawable parkt_i = getResources().getDrawable(R.drawable.parkt_s);
 		Bitmap bpos_i = AndroidGraphicFactory.convertToBitmap(pos_i);
 		Bitmap bp180_i = AndroidGraphicFactory.convertToBitmap(p180_i);
 		Bitmap bp90_i = AndroidGraphicFactory.convertToBitmap(p90_i);
-		Bitmap bpark_i = AndroidGraphicFactory.convertToBitmap(park_i);
+		Bitmap bparkw_i = AndroidGraphicFactory.convertToBitmap(parkw_i);
+		Bitmap bparkt_i = AndroidGraphicFactory.convertToBitmap(parkt_i);
 		
 		// create the overlay and tell it to follow the location
 		this.myLocationOverlay = new MyLocationOverlay(this,
@@ -100,8 +102,10 @@ public class MasterMeterActivity extends RenderTheme4 {
 			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bp90_i, 0, 0));
 		for(Point pos : manager.get180MasterMeters())
 			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bp180_i, 0, 0));
-		for(Point pos : manager.getParkMasterMeters())
-			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bpark_i, 0, 0));
+		for(Point pos : manager.getParkWMasterMeters())
+			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bparkw_i, 0, 0));
+		for(Point pos : manager.getParkTMasterMeters())
+			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bparkt_i, 0, 0));
 		this.myLocationOverlay.setSnapToLocationEnabled(true);
 		mapView.getLayerManager().getLayers().add(this.myLocationOverlay);
 	}
