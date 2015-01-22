@@ -98,6 +98,10 @@ public class MasterMeterActivity extends RenderTheme4 {
 				this.mapView.getModel().mapViewPosition, bpos_i);
 		for(Point pos : manager.get90MasterMeters())
 			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bp90_i, 0, 0));
+		for(Point pos : manager.get180MasterMeters())
+			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bp180_i, 0, 0));
+		for(Point pos : manager.getParkMasterMeters())
+			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bpark_i, 0, 0));
 		this.myLocationOverlay.setSnapToLocationEnabled(true);
 		mapView.getLayerManager().getLayers().add(this.myLocationOverlay);
 	}

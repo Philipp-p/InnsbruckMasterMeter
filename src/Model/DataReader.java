@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+
+import android.os.StrictMode;
 import quadTree.QuadTree;
 
 public class DataReader {
@@ -41,6 +43,11 @@ public class DataReader {
 	}
 
 	private static BufferedReader loadFileFromWeb() {
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+			StrictMode.ThreadPolicy policy = 
+			        new StrictMode.ThreadPolicy.Builder().permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+			}
 		try {
 			URL url12 = new URL(
 					"https://www.innsbruck.gv.at/data.cfm?vpath=diverse/ogd/gis/parkscheinautomatencsv");
