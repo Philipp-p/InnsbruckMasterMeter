@@ -79,10 +79,10 @@ public class Manager {
 	}
 	
 	/**
-	 * 
-	 * @param location
-	 * @param n
-	 * @param category
+	 * returns the n nearest master meters of a category
+	 * @param location user location
+	 * @param n number of master meters wanted
+	 * @param category 1 is 90 min., 2 is 180 min. and 3 is "parkstarssen"
 	 * @return
 	 */
 	public ArrayList<Points> getNearestNMasterMetersOfCategory(Points location, int n, int category) {
