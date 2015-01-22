@@ -116,7 +116,7 @@ public class Manager {
 				data.parkstrassen.put(tmp.getX(), tmp.getY(), tmp);
 			}
 			
-		
+		}
 		return out;
 	}
 
