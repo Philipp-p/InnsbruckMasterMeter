@@ -8,9 +8,9 @@ import java.net.URLConnection;
 import quadTree.QuadTree;
 
 public class DataReader {
-	protected QuadTree<Points> min90 = new QuadTree<Points>(11, 47, 12, 48);
-	protected QuadTree<Points> min180 = new QuadTree<Points>(11, 47, 12, 48);
-	protected QuadTree<Points> parkstrassen = new QuadTree<Points>(11, 47, 12,
+	protected QuadTree<Point> min90 = new QuadTree<Point>(11, 47, 12, 48);
+	protected QuadTree<Point> min180 = new QuadTree<Point>(11, 47, 12, 48);
+	protected QuadTree<Point> parkstrassen = new QuadTree<Point>(11, 47, 12,
 			48);
 
 	/**
@@ -31,11 +31,11 @@ public class DataReader {
 				x = Double.parseDouble(tmp[6].replace(",", ".")); // needed because parseDouble wants "."
 				y = Double.parseDouble(tmp[7].replace(",", "."));
 				if (tmp[3].equals("90 min."))
-					min90.put(x, y, new Points(x, y));
+					min90.put(x, y, new Point(x, y));
 				else if (tmp[3].equals("180 min."))
-					min180.put(x, y, new Points(x, y));
+					min180.put(x, y, new Point(x, y));
 				else if (tmp[3].equals("Parkstraße werktags"))
-					parkstrassen.put(x, y, new Points(x, y));
+					parkstrassen.put(x, y, new Point(x, y));
 			}
 		}
 	}

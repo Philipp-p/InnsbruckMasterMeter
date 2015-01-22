@@ -1,5 +1,7 @@
 package org.apptirol.innsbruckmastermeter;
 
+import Model.Manager;
+import Model.Point;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -41,9 +43,17 @@ import android.widget.TextView;
  */
 //package org.apptirol.innsbruckmastermeter;
 
+
+
+
+
+
 import org.mapsforge.core.graphics.Bitmap;
+import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.layer.MyLocationOverlay;
+import org.mapsforge.map.layer.Layer;
+import org.mapsforge.map.layer.overlay.Marker;
 
 import android.graphics.drawable.Drawable;
 
@@ -54,7 +64,7 @@ import android.graphics.drawable.Drawable;
  */
 public class MasterMeterActivity extends RenderTheme4 {
 	private MyLocationOverlay myLocationOverlay;
-
+	private Manager manager;
 	@Override
 	public void onPause() {
 		myLocationOverlay.disableMyLocation();
@@ -65,18 +75,29 @@ public class MasterMeterActivity extends RenderTheme4 {
 		super.onResume();
 		this.myLocationOverlay.enableMyLocation(true);
 	}
-
+	public void onCreate(Bundle savedInstanceState, android.os.PersistableBundle persistentState) {
+		super.onCreate(savedInstanceState, persistentState);
+	};
 	@Override
 	protected void createLayers() {
 		super.createLayers();
+		manager = new Manager();
 
-		// a marker to show at the position
-		Drawable drawable = getResources().getDrawable(R.drawable.marker_red);
-		Bitmap bitmap = AndroidGraphicFactory.convertToBitmap(drawable);
-
+		// a marker to show at the position 
+		Drawable pos_i = getResources().getDrawable(R.drawable.position);
+		Drawable p180_i = getResources().getDrawable(R.drawable.p180min_s);
+		Drawable p90_i = getResources().getDrawable(R.drawable.p90min_s);
+		Drawable park_i = getResources().getDrawable(R.drawable.park_s);
+		Bitmap bpos_i = AndroidGraphicFactory.convertToBitmap(pos_i);
+		Bitmap bp180_i = AndroidGraphicFactory.convertToBitmap(p180_i);
+		Bitmap bp90_i = AndroidGraphicFactory.convertToBitmap(p90_i);
+		Bitmap bpark_i = AndroidGraphicFactory.convertToBitmap(park_i);
+		
 		// create the overlay and tell it to follow the location
 		this.myLocationOverlay = new MyLocationOverlay(this,
-				this.mapView.getModel().mapViewPosition, bitmap);
+				this.mapView.getModel().mapViewPosition, bpos_i);
+		for(Point pos : manager.get90MasterMeters())
+			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bp90_i, 0, 0));
 		this.myLocationOverlay.setSnapToLocationEnabled(true);
 		mapView.getLayerManager().getLayers().add(this.myLocationOverlay);
 	}

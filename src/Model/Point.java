@@ -1,10 +1,10 @@
 package Model;
 
-public class Points {
+public class Point {
 	Double x;
 	Double y;
 	
-	public Points(Double x, Double y) {
+	public Point(Double x, Double y) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -25,7 +25,4 @@ public class Points {
 	public void setY(Double y) {
 		this.y = y;
 	}
-
-
-
 }

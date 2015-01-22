@@ -9,7 +9,7 @@ public class ManagerTest {
 	@Test
 	public void testNearest() {
 		Manager test = new Manager();
-		Points[] meters= test.getNearestMasterMeters(new Points(11.398386, 47.262954));
+		Point[] meters= test.getNearestMasterMeters(new Point(11.398386, 47.262954));
 		Double delta = 0.00000001;
 		/*
 		for (Points tmp : meters){
