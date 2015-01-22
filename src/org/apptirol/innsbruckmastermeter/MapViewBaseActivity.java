@@ -20,7 +20,7 @@ import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.graphics.AndroidSvgBitmapStore;
 import org.mapsforge.map.android.util.AndroidUtil;
-import org.mapsforge.map.android.util.MapViewerTemplate;
+//import org.mapsforge.map.android.util.MapViewerTemplate;
 import org.mapsforge.map.layer.download.TileDownloadLayer;
 import org.mapsforge.map.layer.download.tilesource.OpenStreetMapMapnik;
 import org.mapsforge.map.layer.renderer.MapWorker;
