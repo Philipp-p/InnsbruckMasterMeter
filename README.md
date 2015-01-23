@@ -4,7 +4,7 @@ A Master Meter finder APP for Innsbruck...
 
 # Compiling
 
-you need the following libraries:
+you need the following libraries (included in the libs folder):
 android-support-v4.jar
 androidsvg-1.2.1.jar
 mapsforge-core-0.5.0.jar
