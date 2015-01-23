@@ -1,20 +1,22 @@
 package Model;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Manager {
-	protected DataReader data = new DataReader();
-
+	protected DataReader data;
+	
 	public Manager() {
-		super();
+		data = new DataReader();
+	}
+	public void fillTrees(InputStream is) {
 		try {
-			data.fillTrees();
+			data.fillTrees(is);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 	/**
 	 * returns all 90 min. master meters
 	 * 

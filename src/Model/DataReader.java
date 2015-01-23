@@ -2,9 +2,11 @@ package Model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 
 import android.os.StrictMode;
 import quadTree.QuadTree;
@@ -22,8 +24,10 @@ public class DataReader {
 	 * 
 	 * @throws IOException
 	 */
-	public void fillTrees() throws IOException {
+	public void fillTrees(InputStream is) throws IOException {
 		BufferedReader buff = loadFileFromWeb();
+		if(buff == null)
+			buff = new BufferedReader(new InputStreamReader(is));
 		Double x;
 		Double y;
 		int i = 0;
@@ -72,23 +76,4 @@ public class DataReader {
 			System.out.println(tmp[3] + " " + tmp[6] + " " + tmp[7]);
 		}
 	}
-
-	public static void main(String[] args) {
-
-		BufferedReader buff = loadFileFromWeb();
-		try {
-			demoRead(buff);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		DataReader test = new DataReader();
-		try {
-			test.fillTrees();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 }

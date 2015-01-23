@@ -1,5 +1,7 @@
 package org.apptirol.innsbruckmastermeter;
 
+import java.io.IOException;
+
 import Model.Manager;
 import Model.Point;
 import android.app.Activity;
@@ -48,6 +50,7 @@ import android.widget.TextView;
 
 
 
+
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
@@ -82,7 +85,11 @@ public class MasterMeterActivity extends RenderTheme4 {
 	protected void createLayers() {
 		super.createLayers();
 		manager = new Manager();
-
+		try {
+			manager.fillTrees(getAssets().open("parkscheinautomaten.csv"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		// a marker to show at the position 
 		Drawable pos_i = getResources().getDrawable(R.drawable.position);
 		Drawable p180_i = getResources().getDrawable(R.drawable.p180min_s);
