@@ -86,7 +86,7 @@ public class MasterMeterActivity extends RenderTheme4 {
 		super.createLayers();
 		manager = new Manager();
 		try {
-			manager.fillTrees(getAssets().open("parkscheinautomaten.csv"));
+			manager.fillTrees(getAssets().open("map/parkscheinautomaten.csv"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
