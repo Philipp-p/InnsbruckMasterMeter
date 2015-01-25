@@ -2,6 +2,7 @@ package Model;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class Manager {
@@ -14,6 +15,8 @@ public class Manager {
 		try {
 			data.fillTrees(is);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}

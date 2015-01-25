@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 import android.os.StrictMode;
 import quadTree.QuadTree;
@@ -23,11 +26,13 @@ public class DataReader {
 	 * master meters, with the data from www.innsbruck.gv.at
 	 * 
 	 * @throws IOException
+	 * @throws ParseException 
 	 */
-	public void fillTrees(InputStream is) throws IOException {
+	public void fillTrees(InputStream is) throws IOException, ParseException {
 		BufferedReader buff = loadFileFromWeb();
 		if(buff == null)
 			buff = new BufferedReader(new InputStreamReader(is));
+		NumberFormat nf = NumberFormat.getInstance(Locale.GERMAN);
 		Double x;
 		Double y;
 		int i = 0;
@@ -35,8 +40,8 @@ public class DataReader {
 				.readLine(), i++) {
 			String[] tmp = content.split(";");
 			if (i != 0) {
-				x = Double.parseDouble(tmp[6].replace(",", ".")); // needed because parseDouble wants "."
-				y = Double.parseDouble(tmp[7].replace(",", "."));
+				x = nf.parse(tmp[6]).doubleValue();
+				y = nf.parse(tmp[7]).doubleValue();
 				if (tmp[3].equals("90 min."))
 					min90.put(x, y, new Point(x, y));
 				else if (tmp[3].equals("180 min."))
