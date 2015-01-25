@@ -18,6 +18,7 @@ package org.apptirol.innsbruckmastermeter;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.apptirol.innsbruckmastermeter.view.MapViewBaseActivity;
 import org.mapsforge.map.android.rendertheme.AssetsRenderTheme;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;

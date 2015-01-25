@@ -1,4 +1,4 @@
-package org.apptirol.innsbruckmastermeter;
+package org.apptirol.innsbruckmastermeter.view;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.apptirol.innsbruckmastermeter.R;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
@@ -69,21 +70,19 @@ public abstract class MapViewBaseActivity extends MapViewerTemplate implements S
 
 	@Override
 	protected MapPosition getDefaultInitialPosition() {
-		return new MapPosition(new LatLong(52.517037, 13.38886), (byte) 12);
+		return new MapPosition(new LatLong(47.263534,11.393943), getZoomLevelDefault());
 	}
 
 	@Override
 	protected void createLayers() {
-		try {
-			getInitialPosition();
+		if(checkMapFile()) {
 			TileRendererLayer tileRendererLayer = AndroidUtil.createTileRendererLayer(this.tileCaches.get(0),
 					mapView.getModel().mapViewPosition, getMapFile(), getRenderTheme(), false, true);
 			this.mapView.getLayerManager().getLayers().add(tileRendererLayer);
 
 			// needed only for samples to hook into Settings.
 			setMaxTextWidthFactor();
-		} catch(IllegalArgumentException e)
-		{
+		} else {
 			downloadLayer = new TileDownloadLayer(this.tileCaches.get(0),
 					this.mapView.getModel().mapViewPosition, OpenStreetMapMapnik.INSTANCE,
 					AndroidGraphicFactory.INSTANCE);

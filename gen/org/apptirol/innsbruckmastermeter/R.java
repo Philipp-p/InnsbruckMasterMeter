@@ -1106,6 +1106,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f0a0002;
         public static final int action_menu_presenter=0x7f0a0003;
         public static final int action_mode_close_button=0x7f0a0024;
+        public static final int action_search=0x7f0a0043;
         public static final int activity_chooser_view_content=0x7f0a0025;
         public static final int always=0x7f0a000f;
         public static final int attribution=0x7f0a0042;
@@ -1131,8 +1132,8 @@ containing a value of this type.
         public static final int longitude=0x7f0a003d;
         public static final int mainView=0x7f0a0040;
         public static final int mapView=0x7f0a0041;
-        public static final int menu_position_enter_coordinates=0x7f0a0043;
-        public static final int menu_preferences=0x7f0a0044;
+        public static final int menu_position_enter_coordinates=0x7f0a0044;
+        public static final int menu_preferences=0x7f0a0045;
         public static final int middle=0x7f0a0018;
         public static final int never=0x7f0a0012;
         public static final int none=0x7f0a0019;

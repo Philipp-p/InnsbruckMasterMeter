@@ -1,4 +1,4 @@
-package Model;
+package org.apptirol.innsbruckmastermeter.model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,8 +11,9 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+import org.apptirol.innsbruckmastermeter.model.quadTree.QuadTree;
+
 import android.os.StrictMode;
-import quadTree.QuadTree;
 
 public class DataReader {
 	protected QuadTree<Point> min90 = new QuadTree<Point>(11, 47, 12, 48);

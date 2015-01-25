@@ -1,4 +1,4 @@
-package Model;
+package org.apptirol.innsbruckmastermeter.model;
 
 import java.io.IOException;
 import java.io.InputStream;

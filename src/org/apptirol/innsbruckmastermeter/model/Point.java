@@ -1,4 +1,4 @@
-package Model;
+package org.apptirol.innsbruckmastermeter.model;
 
 public class Point {
 	Double x;

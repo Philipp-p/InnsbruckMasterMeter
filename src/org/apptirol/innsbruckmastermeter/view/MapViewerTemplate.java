@@ -15,7 +15,7 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.apptirol.innsbruckmastermeter;
+package org.apptirol.innsbruckmastermeter.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -143,7 +143,7 @@ public abstract class MapViewerTemplate extends Activity  {
 	 * @return the default starting zoom level if nothing is encoded in the map file.
 	 */
 	protected byte getZoomLevelDefault() {
-		return (byte) 12;
+		return (byte) 16;
 	}
 
 	/**
@@ -157,7 +157,7 @@ public abstract class MapViewerTemplate extends Activity  {
 	 * @return the maximum zoom level of the map view.
 	 */
 	protected byte getZoomLevelMax() {
-		return (byte) 24;
+		return (byte) 22;
 	}
 
 	/**
@@ -165,13 +165,16 @@ public abstract class MapViewerTemplate extends Activity  {
 	 */
 	protected void createMapViews() {
 		mapView = getMapView();
+		
 		mapView.getModel().init(this.preferencesFacade);
 		mapView.setClickable(true);
 		mapView.getMapScaleBar().setVisible(true);
 		mapView.setBuiltInZoomControls(hasZoomControls());
 		mapView.getMapZoomControls().setZoomLevelMin(getZoomLevelMin());
 		mapView.getMapZoomControls().setZoomLevelMax(getZoomLevelMax());
-		//initializePosition(mapView.getModel().mapViewPosition);
+		//mapView.getModel().mapViewPosition.setMapPosition(new MapPosition(new LatLong(47.263534,11.393943), (byte)16));
+		initializePosition(mapView.getModel().mapViewPosition);
+		
 	}
 
 	/**
@@ -197,7 +200,7 @@ public abstract class MapViewerTemplate extends Activity  {
 	 * @return the fallback initial position of the mapview.
 	 */
 	protected MapPosition getDefaultInitialPosition() {
-		return new MapPosition(new LatLong(0, 0), getZoomLevelDefault());
+		return new MapPosition(new LatLong(0,0), getZoomLevelDefault());
 	}
 
 	/**
@@ -217,16 +220,23 @@ public abstract class MapViewerTemplate extends Activity  {
 				Byte startZoomLevel = mapFileInfo.startZoomLevel;
 				if (startZoomLevel == null) {
 					// it is actually possible to have no start zoom level in the file
-					startZoomLevel = new Byte((byte) 12);
+					startZoomLevel = getZoomLevelDefault();
 				}
 				return new MapPosition(mapFileInfo.startPosition, startZoomLevel);
 			} else {
 				return getDefaultInitialPosition();
 			}
 		}
-		throw new IllegalArgumentException("Invalid Map File " + getMapFileName());
+		return getDefaultInitialPosition();
 	}
+	protected boolean checkMapFile() {
+		MapDatabase mapDatabase = new MapDatabase();
+		final FileOpenResult result = mapDatabase.openFile(getMapFile());
+		if (result.isSuccess())
+			return true;
+		return false;
 
+	}
 	/**
 	 * Provides the directory of the map file, by default the Android external storage
 	 * directory (e.g. sdcard).
@@ -282,11 +292,8 @@ public abstract class MapViewerTemplate extends Activity  {
 	 * @return the mapviewposition set
 	 */
 	protected MapViewPosition initializePosition(MapViewPosition mvp) {
-		LatLong center = mvp.getCenter();
-
-		if (center.equals(new LatLong(0, 0))) {
-			mvp.setMapPosition(this.getInitialPosition());
-		}
+		
+		mvp.setMapPosition(this.getDefaultInitialPosition());
 		mvp.setZoomLevelMax(getZoomLevelMax());
 		mvp.setZoomLevelMin(getZoomLevelMin());
 		return mvp;

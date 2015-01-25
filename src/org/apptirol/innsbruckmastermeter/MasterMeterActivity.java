@@ -2,8 +2,6 @@ package org.apptirol.innsbruckmastermeter;
 
 import java.io.IOException;
 
-import Model.Manager;
-import Model.Point;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -51,6 +49,9 @@ import android.widget.TextView;
 
 
 
+
+import org.apptirol.innsbruckmastermeter.model.Manager;
+import org.apptirol.innsbruckmastermeter.model.Point;
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
