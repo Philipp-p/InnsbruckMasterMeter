@@ -9,18 +9,23 @@ import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apptirol.innsbruckmastermeter.model.quadTree.QuadTree;
 
 import android.os.StrictMode;
 
 public class DataReader {
-	protected QuadTree<Point> min90 = new QuadTree<Point>(11, 47, 12, 48);
-	protected QuadTree<Point> min180 = new QuadTree<Point>(11, 47, 12, 48);
-	protected QuadTree<Point> parkstrassenW = new QuadTree<Point>(11, 47, 12,
-			48);
-	protected QuadTree<Point> parkstrassenT = new QuadTree<Point>(11, 47, 12, 48);
+	protected QuadTree<Point> min90;
+	protected QuadTree<Point> min180;
+	protected QuadTree<Point> parkstrassenW;
+	protected QuadTree<Point> parkstrassenT;
 
 	/**
 	 * fills the three quad trees of the DataReader, one for each category of
@@ -34,42 +39,79 @@ public class DataReader {
 		if(buff == null)
 			buff = new BufferedReader(new InputStreamReader(is));
 		NumberFormat nf = NumberFormat.getInstance(Locale.GERMAN);
-		Double x;
-		Double y;
-		int i = 0;
-		for (String content = buff.readLine(); content != null; content = buff
-				.readLine(), i++) {
+		ArrayList<Point> p90 = new ArrayList<Point>();
+		ArrayList<Point> p180 = new ArrayList<Point>();
+		ArrayList<Point> pW = new ArrayList<Point>();
+		ArrayList<Point> pT = new ArrayList<Point>();
+		Point minCoord = new Point(180.0, 90.0);
+		Point maxCoord = new Point(-180.0, -90.0);
+		// first line contains identifiers for columns
+		buff.readLine();
+		for (String content = buff.readLine(); content != null; content = buff.readLine()) {
 			String[] tmp = content.split(";");
-			if (i != 0) {
-				x = nf.parse(tmp[6]).doubleValue();
-				y = nf.parse(tmp[7]).doubleValue();
+			if (tmp.length == 8) {
+				double x = nf.parse(tmp[6]).doubleValue();
+				double y = nf.parse(tmp[7]).doubleValue();
+				if(x > maxCoord.getX())
+					maxCoord.setX(x);
+				if(y > maxCoord.getY())
+					maxCoord.setY(y);
+				if(x < minCoord.getX())
+					minCoord.setX(x);
+				if(y < minCoord.getY())
+					minCoord.setY(y);
+				Point pos = new Point(x,y);
 				if (tmp[3].equals("90 min."))
-					min90.put(x, y, new Point(x, y));
+					p90.add(pos);
 				else if (tmp[3].equals("180 min."))
-					min180.put(x, y, new Point(x, y));
+					p180.add(pos);
 				else if (tmp[3].equals("Parkstraße werktags"))
-					parkstrassenW.put(x, y, new Point(x, y));
+					pW.add(pos);
 				else if (tmp[3].equals("Parkstraße täglich"))
-					parkstrassenT.put(x, y, new Point(x, y));
+					pT.add(pos);
 			}
 		}
+		min90 = new QuadTree<Point>(minCoord.getX(), minCoord.getY(), maxCoord.getX(), maxCoord.getY());
+		min180 = new QuadTree<Point>(minCoord.getX(), minCoord.getY(), maxCoord.getX(), maxCoord.getY());
+		parkstrassenT = new QuadTree<Point>(minCoord.getX(), minCoord.getY(), maxCoord.getX(), maxCoord.getY());
+		parkstrassenW = new QuadTree<Point>(minCoord.getX(), minCoord.getY(), maxCoord.getX(), maxCoord.getY());
+		for(Point p : p90)
+			min90.put(p.getX(), p.getY(), p);
+		for(Point p : p180)
+			min180.put(p.getX(), p.getY(), p);
+		for(Point p : pW)
+			parkstrassenW.put(p.getX(), p.getY(), p);
+		for(Point p : pT)
+			parkstrassenT.put(p.getX(), p.getY(), p);
 	}
 
 	private static BufferedReader loadFileFromWeb() {
-		if (android.os.Build.VERSION.SDK_INT > 9) {
-			StrictMode.ThreadPolicy policy = 
-			        new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy);
+		BufferedReader buff = null;
+		
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Callable<BufferedReader> callable = new Callable<BufferedReader>() {
+			@Override
+			public BufferedReader call() {
+				try {
+					URL url12 = new URL(
+							"https://www.innsbruck.gv.at/data.cfm?vpath=diverse/ogd/gis/parkscheinautomatencsv");
+					URLConnection urlConn = url12.openConnection();
+					InputStreamReader inStream = new InputStreamReader(
+							urlConn.getInputStream());
+					return new BufferedReader(inStream);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
 			}
+		};
+		Future<BufferedReader> future = executor.submit(callable);
+		// future.get() returns 2
+		executor.shutdown();
 		try {
-			URL url12 = new URL(
-					"https://www.innsbruck.gv.at/data.cfm?vpath=diverse/ogd/gis/parkscheinautomatencsv");
-			URLConnection urlConn = url12.openConnection();
-			InputStreamReader inStream = new InputStreamReader(
-					urlConn.getInputStream());
-			BufferedReader buff = new BufferedReader(inStream);
-			return buff;
-		} catch (Exception e) {
+			return future.get();
+		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return null;
