@@ -1,28 +1,27 @@
 package org.apptirol.innsbruckmastermeter.model;
 
 public class Point {
-	Double x;
-	Double y;
+	double x;
+	double y;
 	
-	public Point(Double x, Double y) {
-		super();
+	public Point(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	public Double getX() {
+	public double getX() {
 		return x;
 	}
 
-	public void setX(Double x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
-	public Double getY() {
+	public double getY() {
 		return y;
 	}
 
-	public void setY(Double y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 }
