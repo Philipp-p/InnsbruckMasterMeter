@@ -1,4 +1,4 @@
-package org.apptirol.innsbruckmastermeter;
+package org.apptirol.innsbruckmastermeter.view;
 
 /*
  * Copyright 2013-2014 Ludwig M Brinckmann
@@ -18,6 +18,7 @@ package org.apptirol.innsbruckmastermeter;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.apptirol.innsbruckmastermeter.R;
 import org.apptirol.innsbruckmastermeter.view.MapViewBaseActivity;
 import org.mapsforge.map.android.rendertheme.AssetsRenderTheme;
 import org.mapsforge.map.android.util.AndroidUtil;
