@@ -55,6 +55,7 @@ public abstract class MapViewBaseActivity extends MapViewerTemplate implements S
 	public static final String TAG = "SAMPLES APP";
 	
 	protected static final int DIALOG_ENTER_COORDINATES = 2923878;
+	protected static final int LEGEND = 2923878+77;
 	protected SharedPreferences sharedPreferences;
 	TileDownloadLayer downloadLayer;
 	@Override
@@ -154,11 +155,12 @@ public abstract class MapViewBaseActivity extends MapViewerTemplate implements S
 	protected Dialog onCreateDialog(int id) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		LayoutInflater factory = LayoutInflater.from(this);
+		final View view;
 		switch (id) {
 			case DIALOG_ENTER_COORDINATES:
 				builder.setIcon(android.R.drawable.ic_menu_mylocation);
 				builder.setTitle(R.string.dialog_location_title);
-				final View view = factory.inflate(R.layout.dialog_enter_coordinates, null);
+				view = factory.inflate(R.layout.dialog_enter_coordinates, null);
 				builder.setView(view);
 				builder.setPositiveButton(R.string.okbutton, new DialogInterface.OnClickListener() {
 					@Override
@@ -176,6 +178,11 @@ public abstract class MapViewBaseActivity extends MapViewerTemplate implements S
 				});
 				builder.setNegativeButton(R.string.cancelbutton, null);
 				return builder.create();
+			case LEGEND:
+				builder.setTitle(R.string.menu_legend);
+				view = factory.inflate(R.layout.dialog_legend, null);
+				builder.setView(view);
+				return builder.create();
 		}
 		return null;
 	}
@@ -188,19 +195,13 @@ public abstract class MapViewBaseActivity extends MapViewerTemplate implements S
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-//		Intent intent;
 		switch (item.getItemId()) {
-			case R.id.menu_preferences:
-//				intent = new Intent(this, Settings.class);
-//				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-//				if (renderThemeStyleMenu != null) {
-//					intent.putExtra(Settings.RENDERTHEME_MENU, renderThemeStyleMenu);
-//				}
-//				startActivity(intent);
-				return true;
 			case R.id.menu_position_enter_coordinates:
 				showDialog(DIALOG_ENTER_COORDINATES);
 				break;
+			case R.id.menu_legend:
+				showDialog(LEGEND);
+				
 		}
 		return false;
 	}

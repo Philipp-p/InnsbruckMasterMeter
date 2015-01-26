@@ -61,10 +61,10 @@ public class MasterMeterActivity extends RenderTheme4 {
 		}
 		// a marker to show at the position 
 		Drawable pos_i = getResources().getDrawable(R.drawable.position);
-		Drawable p180_i = getResources().getDrawable(R.drawable.p180min_s);
-		Drawable p90_i = getResources().getDrawable(R.drawable.p90min_s);
-		Drawable parkw_i = getResources().getDrawable(R.drawable.parkw_s);
-		Drawable parkt_i = getResources().getDrawable(R.drawable.parkt_s);
+		Drawable p180_i = getResources().getDrawable(R.drawable.p180min);
+		Drawable p90_i = getResources().getDrawable(R.drawable.p90min);
+		Drawable parkw_i = getResources().getDrawable(R.drawable.parkw);
+		Drawable parkt_i = getResources().getDrawable(R.drawable.parkt);
 		Bitmap bpos_i = AndroidGraphicFactory.convertToBitmap(pos_i);
 		Bitmap bp180_i = AndroidGraphicFactory.convertToBitmap(p180_i);
 		Bitmap bp90_i = AndroidGraphicFactory.convertToBitmap(p90_i);
@@ -74,6 +74,7 @@ public class MasterMeterActivity extends RenderTheme4 {
 		// create the overlay and tell it to follow the location
 		this.myLocationOverlay = new MyLocationOverlay(this,
 				this.mapView.getModel().mapViewPosition, bpos_i);
+		// add every mastermetericon
 		for(Point pos : manager.get90MasterMeters())
 			mapView.getLayerManager().getLayers().add(new Marker(new LatLong(pos.getY(), pos.getX()), bp90_i, 0, 0));
 		for(Point pos : manager.get180MasterMeters())

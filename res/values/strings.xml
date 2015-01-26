@@ -10,6 +10,11 @@
 
    	<string name="menu_preferences">Settings</string>
     <string name="menu_position_enter_coordinates">Map Position</string>
+    <string name="menu_legend">Legend</string>
+    <string name="menu_legend_pW">Parkstraße werktags</string>
+    <string name="menu_legend_pT">Parkstraße täglich</string>
+    <string name="menu_legend_90">90 min.</string>
+    <string name="menu_legend_180">180 min.</string>
     <string name="menu_svgclear">Clear SVG icon cache</string>
 
 	<string name="cancelbutton">Cancel</string>

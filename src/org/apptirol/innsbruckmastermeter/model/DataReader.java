@@ -86,34 +86,21 @@ public class DataReader {
 	}
 
 	private static BufferedReader loadFileFromWeb() {
-		BufferedReader buff = null;
-		
-		ExecutorService executor = Executors.newSingleThreadExecutor();
-		Callable<BufferedReader> callable = new Callable<BufferedReader>() {
-			@Override
-			public BufferedReader call() {
-				try {
-					URL url12 = new URL(
-							"https://www.innsbruck.gv.at/data.cfm?vpath=diverse/ogd/gis/parkscheinautomatencsv");
-					URLConnection urlConn = url12.openConnection();
-					InputStreamReader inStream = new InputStreamReader(
-							urlConn.getInputStream());
-					return new BufferedReader(inStream);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-		};
-		Future<BufferedReader> future = executor.submit(callable);
-		// future.get() returns 2
-		executor.shutdown();
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+		StrictMode.setThreadPolicy(policy);
 		try {
-			return future.get();
-		} catch (InterruptedException | ExecutionException e) {
+			URL url12 = new URL(
+					"https://www.innsbruck.gv.at/data.cfm?vpath=diverse/ogd/gis/parkscheinautomatencsv");
+			URLConnection urlConn = url12.openConnection();
+			InputStreamReader inStream = new InputStreamReader(
+					urlConn.getInputStream());
+			return new BufferedReader(inStream);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 
