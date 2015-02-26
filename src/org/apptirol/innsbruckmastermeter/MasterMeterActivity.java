@@ -2,20 +2,7 @@ package org.apptirol.innsbruckmastermeter;
 
 import java.io.IOException;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.apptirol.innsbruckmastermeter.model.Manager;
 import org.apptirol.innsbruckmastermeter.model.Point;
@@ -24,7 +11,6 @@ import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.layer.MyLocationOverlay;
-import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.overlay.Marker;
 
 import android.graphics.drawable.Drawable;
